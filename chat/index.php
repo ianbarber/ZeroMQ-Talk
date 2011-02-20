@@ -3,7 +3,7 @@
         <title>ZeroMQ Chat</title>
         <style>
             body {
-                padding: 20px;
+                padding: 5px;
                 background-color: #E5E5E5;
                 font-family: Verdana, Arial, Sans-Serif;
                 color: #555;
@@ -13,10 +13,10 @@
 				display: none;
 			}
 			#chatwindow {
-				width: 700px;
-				height: 400px;
+				width: 500px;
+				height: 50px;
 				overflow: scroll;
-				margin: 10px auto;
+				margin: 5px auto;
 				background: white;
 				border: 1px solid black;
 			}
@@ -26,12 +26,12 @@
 			}
 			
 			#chatform {
-				width: 700px;
+				width: 500px;
 				margin: 0px auto;
 			}
 			
 			#chatbox {
-				width: 620px;
+				width: 350px;
 			}
 			
 			#datasrc {
@@ -44,6 +44,7 @@
         <script lang="text/javascript">
         function updateChat(response) {
 			$('#chatwindow').append('<p>' + response + '</p>');
+			$("#chatwindow").attr({ scrollTop: $("#chatwindow").attr("scrollHeight") });
 		}
 		
 		$(document).ready(function(){

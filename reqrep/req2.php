@@ -6,8 +6,8 @@ $req =
 $req->connect("tcp://localhost:5454");
 
 while(true) {
-    sleep($_SERVER['argv'][2]);
+    usleep($_SERVER['argv'][2]);
     $req->send($_SERVER['argv'][1]  . ": Hello");
-    echo $req->recv();
+    echo date("H:i:s ") . $req->recv();
     echo PHP_EOL;
 }

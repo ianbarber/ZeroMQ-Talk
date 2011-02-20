@@ -11,3 +11,4 @@ if($message == 'm:joined') {
 } else {
 	$send->send($name . ': ' . $message);
 }
+exit();

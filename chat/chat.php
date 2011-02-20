@@ -7,6 +7,10 @@ $sub->connect('tcp://localhost:5566');
 $poll = new ZMQPoll();
 $poll->add($sub, ZMQ::POLL_IN);
 $readable = $writeable = array();
+// Hack for chrome etc. to start polling
+echo str_repeat("<span></span>", 100);
+ob_flush();
+flush();
 while(true) {
     $events = $poll->poll($readable, $writeable, 5000000);
     if($events > 0) {
