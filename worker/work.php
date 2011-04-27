@@ -20,13 +20,9 @@ while(true) {
         $message = $work->recv();
         $sink->send(strlen($message));
     } else {
-        try {
-            if($ctrl->recv(ZMQ::MODE_NOBLOCK)) {
-                echo "Got END";
-                exit();
-            }
-        } catch(ZMQException $e) {
-            // noop
+        if($ctrl->recv(ZMQ::MODE_NOBLOCK)) {
+            echo "Got END";
+            exit();
         }
     }    
 }

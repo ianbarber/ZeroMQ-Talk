@@ -17,13 +17,9 @@ while(true) {
     if($ev) {
         $total += $results->recv();
     } else {
-        try {
-            if($ctrl->recv(ZMQ::MODE_NOBLOCK)) {
-                echo $total, PHP_EOL;
-                exit();
-            }
-        } catch (ZMQException $e) {
-            //noop
+        if($ctrl->recv(ZMQ::MODE_NOBLOCK)) {
+            echo $total, PHP_EOL;
+            exit();
         }
     }
 }
