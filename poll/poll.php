@@ -4,11 +4,9 @@ $context = new ZMQContext();
 $socket = new ZMQSocket($context, ZMQ::SOCKET_PULL);
 $socket->bind("tcp://*:5555");
 
-$fh = fopen("php://stdin", 'r');
-
 $poll = new ZMQPoll();
 $poll->add($socket, ZMQ::POLL_IN);
-$poll->add($fh, ZMQ::POLL_IN);
+$poll->add(STDIN, ZMQ::POLL_IN);
 $readable = $writeable = array();
 
 while(true) {
