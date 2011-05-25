@@ -15,17 +15,11 @@ while(true) {
     $events = $poll->poll($readable, $writeable);
     foreach($readable as $socket) {
         if($socket === $frontend) {
-            do {
-                $message = $frontend->recv();
-                $more = $frontend->getSockOpt(ZMQ::SOCKOPT_RCVMORE);
-                $backend->send($message, $more ? ZMQ::MODE_SNDMORE : null);
-            } while($more);
+            $messages = $frontend->recvMulti();
+            $backend->sendMulti($messages);
         } else if($socket === $backend) {
-            do {
-                $message = $backend->recv();
-                $more = $backend->getSockOpt(ZMQ::SOCKOPT_RCVMORE);
-                $frontend->send($message, $more ? ZMQ::MODE_SNDMORE : null);
-            } while($more);
+            $messages = $backend->recvMulti();
+            $frontend->sendMulti($messages);
         }
     }
 }
