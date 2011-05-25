@@ -14,9 +14,7 @@ while(true) {
    $messages[] = $message;
    if(count($messages) == $bufferSize) {
        echo "Forwarding Buffer", PHP_EOL;
-       foreach($messages as $id => $msg) {
-           $out->send($msg, $id == $bufferSize-1 ? null : ZMQ::MODE_SNDMORE);
-       }
+       $out->sendMulti($messages);
        $messages = array();
    }
 }
