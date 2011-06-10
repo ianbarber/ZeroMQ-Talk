@@ -8,7 +8,7 @@ run() ->
   loop(Socket).
   
 loop(Socket) -> 
-  {ok, Msg} = erlzmq:recv(Socket),
+  {ok, Msg, _F} = erlzmq:recv(Socket),
   Reply = binary_to_list(Msg) ++ " World",
   io:format("Sending ~s~n", [Reply]),
   ok = erlzmq:send(Socket, list_to_binary(Reply)),

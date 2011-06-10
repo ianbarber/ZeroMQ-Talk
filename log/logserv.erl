@@ -9,7 +9,7 @@ run() ->
 
 loop(In) ->
   receive
-    {zmq, In, Msg} ->
+    {zmq, In, Msg, _Flags} ->
       {ok,{obj, [{_, Time}, {_, Log}] }, [] } = rfc4627:decode(Msg),
       io:format("~B ~s~n", [Time, Log]),
       loop(In)

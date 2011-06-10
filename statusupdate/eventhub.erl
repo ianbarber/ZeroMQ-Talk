@@ -11,6 +11,6 @@ run() ->
   loop(In, Out).
   
 loop(In, Out) ->
-  {ok, Msg} = erlzmq:recv(In),
+  {ok, Msg, _F} = erlzmq:recv(In),
   ok = erlzmq:send(Out, Msg),
   loop(In, Out).

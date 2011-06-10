@@ -14,23 +14,19 @@ run() ->
 	ok = erlzmq:close(Back),
 	ok = erlzmq:term(Ctx).
 	
-% using my fork of the bindings here, as multipart support in 
-% erlzmq2 works slightly differently in master
 loop(Front, Back) ->
   receive 
-    {zmq, Front, Msg} ->
+    {zmq, Front, Msg, Flags} ->
       io:format("Sending Back: ~p~n",[Msg]),
-      sendall(Back, Msg),
+      sendall(Back, Msg, Flags),
       loop(Front, Back);
-    {zmq, Back, Msg} ->
+    {zmq, Back, Msg, Flags} ->
       io:format("Sending Front: ~p~n",[Msg]),
-      sendall(Front, Msg),
+      sendall(Front, Msg, Flags),
       loop(Front, Back)
   end.
   
-sendall(To, [Part|[]]) ->
-  erlzmq:send(To, Part);
-  
-sendall(To, [Part|Msg]) ->
-  erlzmq:send(To, Part, [sndmore]),
-  sendall(To, Msg).
+sendall(To, Part, [rcvmore|_Flags]) ->
+  erlzmq:send(To, Part, [sndmore]);
+sendall(To, Part, _Flags) ->
+  erlzmq:send(To, Part).
